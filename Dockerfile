@@ -35,6 +35,7 @@ RUN mv wp-config-sample.php wp-config.php
 
 RUN chown -R www-data:www-data .
 
-EXPOSE 8080
+EXPOSE 80
 
-CMD ["php-fpm", "-D"]
+# run nginx and php-fpm
+CMD ["php-fpm"]
