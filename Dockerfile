@@ -28,6 +28,6 @@ RUN docker-php-ext-install \
 # Copy custom configuration files, if needed
 
 
-EXPOSE 80
+EXPOSE 9000
 
 CMD ["php-fpm"]
