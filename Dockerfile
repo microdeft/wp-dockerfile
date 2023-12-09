@@ -27,7 +27,7 @@ RUN docker-php-ext-install \
 
 # Copy custom configuration files, if needed
 
-COPY wp-config-sample.php /var/www/html/wp-config.php
+COPY wp-config-sample.php wp-config.php
 
 EXPOSE 80
 
