@@ -1,33 +1,23 @@
+# Use the official WordPress image with PHP 8.2 FPM on Alpine
 FROM wordpress:php8.2-fpm-alpine
 
-WORKDIR /var/www/html
+# Install necessary dependencies and extensions
+RUN apk --no-cache add \
+    nginx \
+    supervisor \
+    && docker-php-ext-install mysqli pdo pdo_mysql
 
-# Install dependencies
+# Copy Nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
 
-RUN apk update && apk add --no-cache \
-    bash \
-    curl \
-    git \
-    libpng-dev \
-    libzip-dev \
-    mysql-client \
-    openssh-client \
-    unzip \
-    zip
+# Copy PHP configuration file
+COPY php.ini /usr/local/etc/php/php.ini
 
-# Install PHP extensions
+# Copy Supervisor configuration file
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-RUN docker-php-ext-install \
-    gd \
-    mysqli \
-    pdo_mysql \
-    zip
+# Expose ports
+EXPOSE 80
 
-
-
-# Copy custom configuration files, if needed
-
-
-EXPOSE 9000
-
-CMD ["php-fpm"]
+# Start Supervisor
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
