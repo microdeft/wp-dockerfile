@@ -8,6 +8,9 @@ RUN tar -xzvf latest.tar.gz
 RUN mv wordpress/* .
 RUN rm -rf latest.tar.gz
 
+#rename wp-config-sample.php to wp-config.php
+RUN mv wp-config-sample.php wp-config.php
+
 COPY wp-config.php .
 
 RUN chown -R www-data:www-data .
